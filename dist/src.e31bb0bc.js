@@ -317,229 +317,7 @@ var Container = function Container(element, attributes) {
 
 var _default = Container;
 exports.default = _default;
-},{"./createElement":"createElement.js","./addAttribute":"addAttribute.js"}],"append.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = exports.appendMultiple = void 0;
-
-var append = function append(parent, child) {
-  return "append" in parent && parent.append(child);
-};
-
-var appendMultiple = function appendMultiple(parent, children) {
-  return children.map(function (child) {
-    return append(parent, child);
-  });
-};
-
-exports.appendMultiple = appendMultiple;
-var _default = append;
-exports.default = _default;
-},{}],"img/one.jpeg":[function(require,module,exports) {
-module.exports = "/one.51a948e7.jpeg";
-},{}],"img/two.jpeg":[function(require,module,exports) {
-module.exports = "/two.e6b439e0.jpeg";
-},{}],"img/three.jpeg":[function(require,module,exports) {
-module.exports = "/three.36dcbe28.jpeg";
-},{}],"Delay.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _addAttribute = require("./addAttribute");
-
-var counter = function counter() {
-  var initial = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-  var count = initial;
-  return {
-    getCount: function getCount() {
-      return count;
-    },
-    increment: function increment() {
-      return ++count;
-    },
-    reset: function reset() {
-      return count = 0;
-    }
-  };
-};
-
-var delay = function delay(elements, start) {
-  var _counter = counter(start),
-      getCount = _counter.getCount,
-      increment = _counter.increment,
-      reset = _counter.reset;
-
-  console.log("newCount is", getCount());
-  console.log("current elements", elements);
-  var intervalID = setInterval(function () {
-    if (getCount() >= 2) {
-      reset();
-    } else {
-      increment();
-    }
-
-    var img = elements[getCount()];
-    var count = getCount();
-
-    if (count === 0) {
-      var hiddenElement = elements[2]; //addAttribute(hiddenElement, "class", "hidden");
-
-      (0, _addAttribute.addMultipleClasses)(hiddenElement, {
-        class: "hidden",
-        "aria-hidden": true
-      });
-    } else {
-      var newCount = count - 1;
-      var _hiddenElement = elements[newCount]; // addAttribute(hiddenElement, "class", "hidden");
-
-      (0, _addAttribute.addMultipleClasses)(_hiddenElement, {
-        class: "hidden",
-        "aria-hidden": true
-      });
-    }
-
-    (0, _addAttribute.addMultipleClasses)(img, {
-      class: "visible",
-      "aria-hidden": false
-    });
-    console.log("updated elements", elements);
-  }, 2000);
-  return intervalID;
-};
-
-var _default = delay;
-exports.default = _default;
-},{"./addAttribute":"addAttribute.js"}],"resetTimer.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _addAttribute = require("./addAttribute");
-
-var _Delay = _interopRequireDefault(require("./Delay"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var reset = function reset(id, elements, event) {
-  window.clearInterval(id); //use either getAttribute or dataset property
-  //let newStart = event.target.getAttribute("data-number");
-
-  var newStart = event.target.dataset.number;
-  elements.forEach(function (element) {
-    if (element.id === event.target.name) {
-      (0, _addAttribute.addMultipleClasses)(element, {
-        class: "visible",
-        "aria-hidden": false
-      });
-    } else {
-      (0, _addAttribute.addMultipleClasses)(element, {
-        class: "hidden",
-        "aria-hidden": true
-      });
-    }
-  });
-  console.log(newStart);
-  var intervalID = (0, _Delay.default)(elements, newStart);
-  return intervalID;
-};
-
-var _default = reset;
-exports.default = _default;
-},{"./addAttribute":"addAttribute.js","./Delay":"Delay.js"}],"Carousel.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _Image = _interopRequireDefault(require("./Image"));
-
-var _Button = _interopRequireDefault(require("./Button"));
-
-var _Container = _interopRequireDefault(require("./Container"));
-
-var _append = require("./append");
-
-var _one = _interopRequireDefault(require("./img/one.jpeg"));
-
-var _two = _interopRequireDefault(require("./img/two.jpeg"));
-
-var _three = _interopRequireDefault(require("./img/three.jpeg"));
-
-var _Delay = _interopRequireDefault(require("./Delay"));
-
-var _resetTimer = _interopRequireDefault(require("./resetTimer"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Carousel = function Carousel() {
-  //wrappers
-  var container = (0, _Container.default)("div", {
-    class: "wrapper"
-  });
-  var imgContainer = (0, _Container.default)("div", {
-    class: "center"
-  });
-  var btnContainer = (0, _Container.default)("div", {
-    class: "btnContainer"
-  }); //dom elements
-
-  var images = [(0, _Image.default)({
-    src: _one.default,
-    class: "visible",
-    id: "imgOne",
-    "aria-hidden": false
-  }), (0, _Image.default)({
-    src: _two.default,
-    class: "hidden",
-    id: "imgTwo",
-    "aria-hidden": true
-  }), (0, _Image.default)({
-    src: _three.default,
-    class: "hidden",
-    id: "imgThree",
-    "aria-hidden": true
-  })];
-  var buttons = [(0, _Button.default)({
-    name: "imgOne",
-    "data-number": 0
-  }), (0, _Button.default)({
-    name: "imgTwo",
-    "data-number": 1
-  }), (0, _Button.default)({
-    name: "imgThree",
-    "data-number": 2
-  })]; //appending functions, like ReactDOM.render
-
-  (0, _append.appendMultiple)(imgContainer, images);
-  (0, _append.appendMultiple)(btnContainer, buttons);
-  (0, _append.appendMultiple)(container, [imgContainer, btnContainer]); //carousel functionality
-
-  var intervalID = (0, _Delay.default)(images, 0); //buttion event handlers
-
-  buttons.forEach(function (button) {
-    button.addEventListener("click", function (event) {
-      var id = intervalID;
-      intervalID = (0, _resetTimer.default)(id, images, event);
-    });
-  });
-  return container;
-};
-
-var _default = Carousel;
-exports.default = _default;
-},{"./Image":"Image.js","./Button":"Button.js","./Container":"Container.js","./append":"append.js","./img/one.jpeg":"img/one.jpeg","./img/two.jpeg":"img/two.jpeg","./img/three.jpeg":"img/three.jpeg","./Delay":"Delay.js","./resetTimer":"resetTimer.js"}],"Text.js":[function(require,module,exports) {
+},{"./createElement":"createElement.js","./addAttribute":"addAttribute.js"}],"Text.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -565,7 +343,28 @@ var Text = function Text() {
 
 var _default = Text;
 exports.default = _default;
-},{"./createElement":"createElement.js","./addAttribute":"addAttribute.js"}],"Header.js":[function(require,module,exports) {
+},{"./createElement":"createElement.js","./addAttribute":"addAttribute.js"}],"append.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.appendMultiple = void 0;
+
+var append = function append(parent, child) {
+  return "append" in parent && parent.append(child);
+};
+
+var appendMultiple = function appendMultiple(parent, children) {
+  return children.map(function (child) {
+    return append(parent, child);
+  });
+};
+
+exports.appendMultiple = appendMultiple;
+var _default = append;
+exports.default = _default;
+},{}],"Header.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -592,26 +391,259 @@ var Header = function Header(txt) {
 
 var _default = Header;
 exports.default = _default;
-},{"./Container":"Container.js","./Text":"Text.js","./append":"append.js"}],"index.js":[function(require,module,exports) {
+},{"./Container":"Container.js","./Text":"Text.js","./append":"append.js"}],"img/one.jpeg":[function(require,module,exports) {
+module.exports = "/one.51a948e7.jpeg";
+},{}],"img/two.jpeg":[function(require,module,exports) {
+module.exports = "/two.e6b439e0.jpeg";
+},{}],"img/three.jpeg":[function(require,module,exports) {
+module.exports = "/three.36dcbe28.jpeg";
+},{}],"Delay.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _addAttribute = _interopRequireWildcard(require("./addAttribute"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var counter = function counter() {
+  var initial = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+  var count = initial;
+  return {
+    getCount: function getCount() {
+      return count;
+    },
+    increment: function increment() {
+      return ++count;
+    },
+    reset: function reset() {
+      return count = 0;
+    }
+  };
+};
+
+var delay = function delay(elements, start, buttons) {
+  var _counter = counter(start),
+      getCount = _counter.getCount,
+      increment = _counter.increment,
+      reset = _counter.reset;
+
+  console.log("newCount is", getCount());
+  console.log("current elements", elements);
+  var intervalID = setInterval(function () {
+    //control flow that manages count logic
+    //i.e. ensures count does not go higher than 2
+    //if 2, count gets reset to 0.
+    if (getCount() >= 2) {
+      reset();
+    } else {
+      increment();
+    } //count is updated, so img points at image that should be visible
+
+
+    var count = getCount();
+    var img = elements[count];
+    var currentButton = buttons[count]; //this if statement hides previous image
+
+    if (count === 0) {
+      //hides previous image element
+      //if new count is 0, then previous image must be 2
+      var hiddenElement = elements[2];
+      var previousButton = buttons[2]; //addAttribute(hiddenElement, "class", "hidden");
+
+      (0, _addAttribute.addMultipleClasses)(hiddenElement, {
+        class: "hidden",
+        "aria-hidden": true
+      });
+      previousButton.removeAttribute("class");
+    } else {
+      //if count is not 0, then simply subtract new count by one
+      var newCount = count - 1;
+      var _hiddenElement = elements[newCount];
+      var _previousButton = buttons[newCount]; // addAttribute(hiddenElement, "class", "hidden");
+
+      (0, _addAttribute.addMultipleClasses)(_hiddenElement, {
+        class: "hidden",
+        "aria-hidden": true
+      });
+
+      _previousButton.removeAttribute("class");
+    } //after hiding previous image, new is shown
+
+
+    (0, _addAttribute.addMultipleClasses)(img, {
+      class: "visible",
+      "aria-hidden": false
+    });
+    (0, _addAttribute.default)(currentButton, "class", "currentButton");
+    console.log("updated elements", elements);
+  }, 2000);
+  return intervalID;
+};
+
+var _default = delay;
+exports.default = _default;
+},{"./addAttribute":"addAttribute.js"}],"resetTimer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _addAttribute = _interopRequireWildcard(require("./addAttribute"));
+
+var _Delay = _interopRequireDefault(require("./Delay"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var reset = function reset(id, elements, event, buttons) {
+  window.clearInterval(id); //use either getAttribute or dataset property
+  //let newStart = event.target.getAttribute("data-number");
+
+  var newStart = event.target.dataset.number;
+  elements.forEach(function (element, index) {
+    if (element.id === event.target.name) {
+      //event.target.name points at a string that describes the position of the button
+      //that is equal to the position of the image (element.id)
+      (0, _addAttribute.addMultipleClasses)(element, {
+        class: "visible",
+        "aria-hidden": false
+      }); //the index is the value of the current iteration
+      //inside the if block, it's the position of the element that becomes visible
+      //that can be used to change the style of the button - turn it black
+
+      (0, _addAttribute.default)(buttons[index], "class", "currentButton");
+    } else {
+      (0, _addAttribute.addMultipleClasses)(element, {
+        class: "hidden",
+        "aria-hidden": true
+      }); //same as above, but here, it's used to turn the button to grey
+      //which is the previous image/button
+
+      buttons[index].removeAttribute("class");
+    }
+  });
+  var intervalID = (0, _Delay.default)(elements, newStart, buttons);
+  return intervalID;
+};
+
+var _default = reset;
+exports.default = _default;
+},{"./addAttribute":"addAttribute.js","./Delay":"Delay.js"}],"Carousel.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Image = _interopRequireDefault(require("./Image"));
+
+var _Button = _interopRequireDefault(require("./Button"));
+
+var _Container = _interopRequireDefault(require("./Container"));
+
+var _Header = _interopRequireDefault(require("./Header"));
+
+var _append = require("./append");
+
+var _one = _interopRequireDefault(require("./img/one.jpeg"));
+
+var _two = _interopRequireDefault(require("./img/two.jpeg"));
+
+var _three = _interopRequireDefault(require("./img/three.jpeg"));
+
+var _Delay = _interopRequireDefault(require("./Delay"));
+
+var _resetTimer = _interopRequireDefault(require("./resetTimer"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Carousel = function Carousel() {
+  //wrappers
+  var container = (0, _Container.default)("div", {
+    class: "wrapper"
+  });
+  var imgContainer = (0, _Container.default)("div", {
+    class: "center"
+  });
+  var btnContainer = (0, _Container.default)("div", {
+    class: "btnContainer"
+  });
+  var headContainer = (0, _Header.default)("Carousel UI achieved with Vanilla JS."); //dom elements
+
+  var images = [(0, _Image.default)({
+    src: _one.default,
+    class: "visible",
+    id: "imgOne",
+    "aria-hidden": false
+  }), (0, _Image.default)({
+    src: _two.default,
+    class: "hidden",
+    id: "imgTwo",
+    "aria-hidden": true
+  }), (0, _Image.default)({
+    src: _three.default,
+    class: "hidden",
+    id: "imgThree",
+    "aria-hidden": true
+  })];
+  var buttons = [(0, _Button.default)({
+    name: "imgOne",
+    "data-number": 0,
+    class: "currentButton"
+  }), (0, _Button.default)({
+    name: "imgTwo",
+    "data-number": 1
+  }), (0, _Button.default)({
+    name: "imgThree",
+    "data-number": 2
+  })]; //appending functions, like ReactDOM.render
+
+  (0, _append.appendMultiple)(imgContainer, images);
+  (0, _append.appendMultiple)(btnContainer, buttons); //appends ALL Components to Container
+
+  (0, _append.appendMultiple)(container, [headContainer, imgContainer, btnContainer]); //carousel functionality
+
+  var intervalID = (0, _Delay.default)(images, 0, buttons); //buttion event handlers
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function (event) {
+      var id = intervalID;
+      intervalID = (0, _resetTimer.default)(id, images, event, buttons);
+    });
+  });
+  return container;
+};
+
+var _default = Carousel;
+exports.default = _default;
+},{"./Image":"Image.js","./Button":"Button.js","./Container":"Container.js","./Header":"Header.js","./append":"append.js","./img/one.jpeg":"img/one.jpeg","./img/two.jpeg":"img/two.jpeg","./img/three.jpeg":"img/three.jpeg","./Delay":"Delay.js","./resetTimer":"resetTimer.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 require("./styles.css");
 
 var _Carousel = _interopRequireDefault(require("./Carousel"));
 
-var _Header = _interopRequireDefault(require("./Header"));
-
 var _append = _interopRequireDefault(require("./append"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //Carousel UI
-//header text - brief explanation
 //appends to given root
 var root = document.getElementById("app");
-(0, _append.default)(root, (0, _Header.default)("Carousel UI achieved with Vanilla JS."));
 (0, _append.default)(root, (0, _Carousel.default)());
-},{"./styles.css":"styles.css","./Carousel":"Carousel.js","./Header":"Header.js","./append":"append.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./styles.css":"styles.css","./Carousel":"Carousel.js","./append":"append.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -639,7 +671,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53954" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61038" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

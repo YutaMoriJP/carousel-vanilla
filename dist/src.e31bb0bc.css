@@ -55,10 +55,19 @@ img {
  .btnContainer button {
      width:20px;
      height:20px;
-     background:black;
+     background:grey;
      border-radius: 50%;
      cursor: pointer;
      border:0;
+ }
+
+.headWrapper {
+    display:flex;
+    justify-content: center;
+}
+
+.btnContainer  button.currentButton {
+     background:black;
  }
 
 

@@ -1,6 +1,7 @@
 import Image from "./Image";
 import Button from "./Button";
 import Container from "./Container";
+import Header from "./Header";
 
 import { appendMultiple } from "./append";
 import imgOne from "./img/one.jpeg";
@@ -15,6 +16,7 @@ const Carousel = () => {
   const container = Container("div", { class: "wrapper" });
   const imgContainer = Container("div", { class: "center" });
   const btnContainer = Container("div", { class: "btnContainer" });
+  const headContainer = Header("Carousel UI achieved with Vanilla JS.");
 
   //dom elements
   const images = [
@@ -33,7 +35,7 @@ const Carousel = () => {
     }),
   ];
   const buttons = [
-    Button({ name: "imgOne", "data-number": 0 }),
+    Button({ name: "imgOne", "data-number": 0, class: "currentButton" }),
     Button({ name: "imgTwo", "data-number": 1 }),
     Button({ name: "imgThree", "data-number": 2 }),
   ];
@@ -41,16 +43,17 @@ const Carousel = () => {
   //appending functions, like ReactDOM.render
   appendMultiple(imgContainer, images);
   appendMultiple(btnContainer, buttons);
-  appendMultiple(container, [imgContainer, btnContainer]);
+  //appends ALL Components to Container
+  appendMultiple(container, [headContainer, imgContainer, btnContainer]);
 
   //carousel functionality
-  let intervalID = delay(images, 0);
+  let intervalID = delay(images, 0, buttons);
 
   //buttion event handlers
   buttons.forEach(button => {
     button.addEventListener("click", event => {
       let id = intervalID;
-      intervalID = reset(id, images, event);
+      intervalID = reset(id, images, event, buttons);
     });
   });
 
