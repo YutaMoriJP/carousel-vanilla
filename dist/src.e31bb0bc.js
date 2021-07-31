@@ -580,7 +580,7 @@ var Carousel = function Carousel() {
   var btnContainer = (0, _Container.default)("div", {
     class: "btnContainer"
   });
-  var headContainer = (0, _Header.default)("Carousel UI achieved with Vanilla JS."); //dom elements
+  var headContainer = (0, _Header.default)("Carousel UI achieved with Vanilla JS. The image rotates to the next one after 2 seconds, or by clicking the button below the image."); //dom elements, images and button
 
   var images = [(0, _Image.default)({
     src: _one.default,

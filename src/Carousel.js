@@ -16,9 +16,11 @@ const Carousel = () => {
   const container = Container("div", { class: "wrapper" });
   const imgContainer = Container("div", { class: "center" });
   const btnContainer = Container("div", { class: "btnContainer" });
-  const headContainer = Header("Carousel UI achieved with Vanilla JS.");
+  const headContainer = Header(
+    "Carousel UI achieved with Vanilla JS. The image rotates to the next one after 2 seconds, or by clicking the button below the image."
+  );
 
-  //dom elements
+  //dom elements, images and button
   const images = [
     Image({
       src: imgOne,
