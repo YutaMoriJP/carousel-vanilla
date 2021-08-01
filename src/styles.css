@@ -28,6 +28,7 @@ img {
      align-content: center;
      gap:10px;
  }
+ 
 
 .hidden {
      display:none;
@@ -44,6 +45,12 @@ img {
     height:100vh;
     width:100vw;
     gap: 10px;
+}
+
+.wrapper > * {
+    -webkit-margin-end:5px;
+    -webkit-margin-start:5px;
+
 }
 
  .btnContainer {
@@ -81,7 +88,6 @@ img {
     color:#f8f9fa;
     padding:10px 15px;
     box-sizing: border-box;
-
  }
 
 .btnContainer  button.currentButton {
