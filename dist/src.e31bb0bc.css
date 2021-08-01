@@ -72,22 +72,24 @@ img {
 .headWrapper {
     display:flex;
     justify-content: center;
-}
-
-.headWrapper > * {
+    flex-direction: column;
+    align-items: center;
     width: 80%;
     max-width: 400px;
     min-width:200px;
-    text-align:center;
-    line-height: 20px;
-    font-size: 0.9rem;
     background:#087f5b;
     border-radius: 6px;
     border:0;
-    box-shadow: 5px 5px 6px #868e96;
-    color:#f8f9fa;
     padding:10px 15px;
     box-sizing: border-box;
+    margin:0 auto;
+}
+
+.headWrapper p , a{
+    text-align:center;
+    line-height: 20px;
+    font-size: 0.9rem;    
+     color:#f8f9fa;
  }
 
 .btnContainer  button.currentButton {

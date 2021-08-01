@@ -364,7 +364,30 @@ var appendMultiple = function appendMultiple(parent, children) {
 exports.appendMultiple = appendMultiple;
 var _default = append;
 exports.default = _default;
-},{}],"Header.js":[function(require,module,exports) {
+},{}],"Link.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _createElement = _interopRequireDefault(require("./createElement"));
+
+var _addAttribute = require("./addAttribute");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Link = function Link(attributes) {
+  var element = (0, _createElement.default)("a");
+  element.textContent = "See React Version";
+  (0, _addAttribute.addMultipleClasses)(element, attributes);
+  return element;
+};
+
+var _default = Link;
+exports.default = _default;
+},{"./createElement":"createElement.js","./addAttribute":"addAttribute.js"}],"Header.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -378,6 +401,8 @@ var _Text = _interopRequireDefault(require("./Text"));
 
 var _append = _interopRequireDefault(require("./append"));
 
+var _Link = _interopRequireDefault(require("./Link"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Header = function Header(txt) {
@@ -385,13 +410,19 @@ var Header = function Header(txt) {
     class: "headWrapper"
   });
   var text = (0, _Text.default)(txt, "p");
+  var link = (0, _Link.default)({
+    href: "https://react-carousel-ui.netlify.app/",
+    target: "_blank",
+    rel: "noreferrer"
+  });
   (0, _append.default)(Wrapper, text);
+  (0, _append.default)(Wrapper, link);
   return Wrapper;
 };
 
 var _default = Header;
 exports.default = _default;
-},{"./Container":"Container.js","./Text":"Text.js","./append":"append.js"}],"img/one.jpeg":[function(require,module,exports) {
+},{"./Container":"Container.js","./Text":"Text.js","./append":"append.js","./Link":"Link.js"}],"img/one.jpeg":[function(require,module,exports) {
 module.exports = "/one.51a948e7.jpeg";
 },{}],"img/two.jpeg":[function(require,module,exports) {
 module.exports = "/two.e6b439e0.jpeg";
@@ -671,7 +702,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61038" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49499" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
